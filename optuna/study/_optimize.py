@@ -30,6 +30,7 @@ from optuna.study._tell import STUDY_TELL_WARNING_KEY
 from optuna.trial import FrozenTrial
 from optuna.trial import TrialState
 
+from optuna.integration.comet import CometCallback
 
 _logger = logging.get_logger(__name__)
 
@@ -49,6 +50,11 @@ def _optimize(
         raise TypeError(
             "The catch argument is of type '{}' but must be a tuple.".format(type(catch).__name__)
         )
+
+    if os.environ.get("COMET_AUTO_LOG_OPTUNA", 1) == 1:
+        if callbacks is None:
+            callbacks = []
+        callbacks = [CometCallback()]
 
     if not study._optimize_lock.acquire(False):
         raise RuntimeError("Nested invocation of `Study.optimize` method isn't allowed.")
