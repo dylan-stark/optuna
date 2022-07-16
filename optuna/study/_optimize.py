@@ -51,7 +51,7 @@ def _optimize(
             "The catch argument is of type '{}' but must be a tuple.".format(type(catch).__name__)
         )
 
-    if os.environ.get("COMET_AUTO_LOG_OPTUNA", 1) == 1:
+    if os.environ.get("COMET_OPTUNA_AUTO_LOG", 1) == 1:
         if callbacks is None:
             callbacks = []
         callbacks = [CometCallback()]
