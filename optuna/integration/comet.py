@@ -30,7 +30,7 @@ class CometCallback:
     def _check_if_should_run(self) -> bool:
         """Checks if we have everything we need to automatically run."""
         have_comet = _imports.is_successful()
-        have_comet_api_key = "comet.api_key" in get_config().keys()
+        have_comet_api_key = not get_config("comet.api_key") is None
 
         if have_comet and not have_comet_api_key:
             _logger.warning(
